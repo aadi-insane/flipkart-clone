@@ -1,0 +1,43 @@
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title">All Products</h5>
+    <% if products.empty? %>
+      <div class="alert alert-info" role="alert">
+        No products found.
+      </div>
+    <% else %>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Product ID</th>
+              <th scope="col">Name</th>
+              <% if user_signed_in? && (current_user.seller? || current_user.admin?) %>
+              <th scope="col">Stock</th>
+              <% end %>
+              <th scope="col">Price</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% i = 1%>
+            <% products.each do |product| %>
+              <tr>
+                <th><%= i %></th>
+                <td><%= product.id %></td>
+                <td><%= product.name %></td>
+                <% if user_signed_in? && (current_user.seller? || current_user.admin?) %>
+                <td><%= product.stock %></td>
+                <% end %>
+                <td>₹ <%= product.price %></td>
+                <td><%= link_to "Show", product_path(product) %></td>
+              </tr>
+                <% i += 1 %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+</div>

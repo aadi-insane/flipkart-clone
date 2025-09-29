@@ -1,0 +1,44 @@
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card shadow">
+        
+        <!-- Assuming you have an image, otherwise display a placeholder -->
+        <img src="https://d2v5dzhdg4zhx3.cloudfront.net/web-assets/images/storypages/primary/ProductShowcasesampleimages/JPEG/Product+Showcase-1.jpg" class="card-img-top img-fluid" alt="product_image">
+        <div class="card-body">
+          <h5 class="card-title"><%= @product.name %></h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <li class="list-group-item w-50">Price: ₹ <%= @product.price %></li>
+                <li class="list-group-item w-50">Rating: <img src="/assets/rating.png" alt="star_rating" style="width: 35%;"></li>
+            </div>          
+          <% if user_signed_in? && current_user.seller? %>
+            <li class="list-group-item">Stock: <%= @product.stock %></li>
+          <% end %>
+        </ul>
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <% if user_signed_in? && current_user.seller? %>
+            <%= link_to "Edit Product", edit_product_path, class: "btn btn-outline-primary" %>
+          <% elsif user_signed_in? && current_user.customer? %>
+            <%= link_to "Buy Now", "#", class: "btn btn-outline-primary" %>
+
+            <%= form_with url: cart_cart_items_path, method: :post, class: "d-flex align-items-center" do %>
+                <%= hidden_field_tag :product_id, @product.id %>
+                <%= hidden_field_tag :cart_id, current_user.cart.id %>
+                <%= number_field_tag :quantity, 1, min: 1, max: @product.stock, class: "form-control w-50 me-2" %>
+                <%= submit_tag "Add to Cart", class: "btn btn-outline-secondary w-50" %>
+            <% end %>
+          <% else %>
+          <%# <%= flash[:notice] = "Please login to buy any product!" %>
+            <%= link_to "Buy Now", user_session_path, class: "btn btn-outline-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="mb-3">Product Description</h3>
+      <p><%= @product.description %></p>
+    </div>
+  </div>
+</div>

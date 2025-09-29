@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Active Admin</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'active_admin', media: 'all', 'data-turbo-track': 'reload' %>
+    <%= javascript_include_tag 'active_admin', 'data-turbo-track': 'reload', defer: true %>
+
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+  </head>
+
+  <body class="<%= body_class %>">
+    <%= yield %>
+  </body>
+</html>

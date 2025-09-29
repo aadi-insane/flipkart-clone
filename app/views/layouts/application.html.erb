@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flipkart</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <style>
+      @media (min-width: 1025px) {
+      .h-custom {
+      height: 100vh !important;
+      }
+      }
+
+      .horizontal-timeline .items {
+      border-top: 2px solid #ddd;
+      }
+
+      .horizontal-timeline .items .items-list {
+      position: relative;
+      margin-right: 0;
+      }
+
+      .horizontal-timeline .items .items-list:before {
+      content: "";
+      position: absolute;
+      height: 8px;
+      width: 8px;
+      border-radius: 50%;
+      background-color: #ddd;
+      top: 0;
+      margin-top: -5px;
+      }
+
+      .horizontal-timeline .items .items-list {
+      padding-top: 15px;
+      }
+    </style>
+  </head>
+
+  <body class="d-flex flex-column min-vh-100">
+    <%= render 'layouts/navbar' %>
+    
+    <main class="container mt-4">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <%= yield %>
+    </main>
+    
+    <%= render 'layouts/footer' %>
+  </body>
+</html>

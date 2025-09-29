@@ -1,0 +1,135 @@
+<h1 class="mb-1"><%= current_user.name || current_user.email %>'s Orders</h1>
+<% if @orders.empty? %>
+    <div class="card p-5 text-center">
+        <h3 class="text-muted">You have not purchased anything yet.</h3>
+        <p class="text-muted">Explore our products, place orders and we'll happy to deliver them to you!</p>
+        <%= link_to "See if you prepare CART", cart_path, class: "btn btn-primary mt-3" %>
+    </div>
+<% else %>
+    <% @orders.each do |order| %>
+    <div class="card border-top border-bottom border-3 mb-2 p-2" style="border-color: #f37a27 !important;">
+        <p class="lead fw-bold mb-2" style="color: #f37a27;">Purchase Reciept</p>
+        
+        <div class="row">
+        <div class="col mb-1">
+            <p class="small text-muted mb-1">Date</p>
+            <p><%= order.created_at.in_time_zone('Asia/Kolkata').strftime("%d %b %Y, %I:%M %p") %></p>
+        </div>
+        <div class="col mb-3">
+            <p class="small text-muted mb-1">Order No.</p>
+            <p>
+            <%# A placeholder for your permanent order number %>
+            <%= rand(1472289..1478116) %>:<%= order.id %>
+            </p>
+        </div>
+        <div class="col mb-3">
+            <p class="small text-muted mb-1">Payment Type</p>
+            <p>
+            <%# A placeholder for your permanent order number %>
+            <%= order.payment_option.upcase %>
+            </p>
+        </div>
+        </div>
+
+        <div class="mx-n5">
+        <div class="row">
+            <div class="col-md-6 col-lg-6">
+            <p><strong>Product</strong></p>
+            </div>
+            <div class="col-md-3 col-lg-2">
+            <p><strong>Quantity</strong></p>
+            </div>
+            <div class="col-md-3 col-lg-2">
+            <p><strong>Price</strong></p>
+            </div>
+        </div>
+        </div>
+
+        <% order.order_items.each do |item| %>
+        <div class="mx-n5">
+            <div class="row">
+            <div class="col-md-6 col-lg-6">
+                <p><%= item.product.name %></p>
+            </div>
+            <div class="col-md-3 col-lg-2">
+                <p><%= item.quantity %></p>
+            </div>
+            <div class="col-md-3 col-lg-2">
+                <p>₹<%= '%.2f' % item.product.price %></p>
+            </div>
+            </div>
+        </div>
+        <% end %>
+
+        <div class="w-75">
+        <div class="text-end">
+            <p class="lead fw-bold mb-0" style="color: #f37a27;">₹<%= order.total_amount %></p>
+        </div>
+        </div>
+
+        <p class="lead fw-bold mb-1" style="color: #281a10ff;">Delivery Address</p>
+        <p><%= order.delivery_address.titleize if order.delivery_address %></p>
+
+        <% unless order.status == "cancelled" %>
+
+        <div class="row mx-3">
+            <div class="col-3">
+                <p class="lead fw-bold" style="color: #f37a27;">Your Order Status :</p>
+            </div>
+            
+            <div class="col-9">
+                <div class="d-flex justify-content-between">
+                    
+                <%# recieved: 0, shipped: 1, dispatched: 2, out_for_delivery: 3, delivered: 4, cancelled: 5 %>
+
+
+                <%= button_tag 'Received', class: "btn text-primary btn-sm rounded #{'btn-warning glow-btn' if order.recieved?}" %>
+
+                <%= button_tag 'Shipped', class: "btn text-primary btn-sm rounded #{'btn-warning glow-btn' if order.shipped?}" %>
+
+                <%= button_tag 'Dispatched', class: "btn text-primary btn-sm rounded #{'btn-warning glow-btn' if order.dispatched?}" %>
+
+                <%= button_tag 'Out for Delivery', class: "btn text-primary btn-sm rounded #{'btn-warning glow-btn' if order.out_for_delivery?}" %>
+
+                <%= button_tag 'Delivered', class: "btn text-primary btn-sm rounded #{'btn-warning glow-btn' if order.delivered?}" %>
+                </div>
+            </div>
+        </div>
+
+            <% unless order.status == "delivered" %>
+                <div class="mt-4 pt-2 mb-0 text-center" >
+                    <%= button_to 'Cancel Order',
+                        cancel_order_order_path(order),
+                        method: :patch,
+                        form: {
+                            onsubmit: "return confirm('Are you sure you want to cancel this order?');"
+                        },
+                        class: "btn btn-danger w-25" %>
+                </div>
+            <% else %>
+                <div class="mt-4 pt-2 mb-0 text-center" >
+                    <%= button_to 'Return Order',
+                        return_order_order_path(order),
+                        method: :patch,
+                        form: {
+                        onsubmit: "return confirm('Are you sure you want to return this order?');"
+                        },
+                        class: "btn btn-warning w-25" %>
+                </div>
+            <% end %>
+
+        <% else %>
+            <p class="lead fw-bold mb-4 pb-2" style="color: #f37a27;">You have cancelled this order!</p>
+        <% end %>
+
+        <div class="mt-4 pt-2 mb-0 text-center" >
+            <p class="mt-1">Want any help? <a href="#!" style="color: #f37a27;">Please contact us</a></p>
+        </div>
+        
+    </div>
+    <% end %>
+<% end %>
+
+<div class="pagination justify-content-center">
+  <%= will_paginate @orders, renderer: WillPaginate::ActionView::BootstrapLinkRenderer, list_classes: %w(pagination justify-content-center) %>
+</div>

@@ -1,0 +1,308 @@
+<h1>All Orders</h1>
+<p>Find me in app/views/orders/show.html.erb</p>
+
+
+<% @orders.each do |order| %>
+    <div class="card border-top border-bottom border-3 mb-2 p-2" style="border-color: #f37a27 !important;">
+        <p class="lead fw-bold mb-1" style="color: #f37a27;">Purchase Reciept</p>
+        <div class="row">
+            <div class="col mb-1">
+                <p class="small text-muted mb-1">Date</p>
+                <p><%= order.created_at.strftime("%d %B %Y") %></p>
+            </div>
+            <div class="col mb-3">
+                <p class="small text-muted mb-1">Order No.</p>
+                <p>
+                    <%# A placeholder for your permanent order number %>
+                    <%= rand(1472289..1478116) %>:<%= order.id %>
+                </p>
+            </div>
+            <div class="col mb-3">
+                <p class="small text-muted mb-1">Payment Type</p>
+                <p>
+                    <%# A placeholder for your permanent order number %>
+                    <%= order.payment_option.upcase %>
+                </p>
+            </div>
+        </div>
+            <div class="mx-n5">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6">
+                        <p><strong>Product</strong></p>
+                    </div>
+                    <div class="col-md-3 col-lg-2">
+                        <p><strong>Quantity</strong></p>
+                    </div>
+                    <div class="col-md-3 col-lg-2">
+                    <p><strong>Price</strong></p>
+                    </div>
+                </div>
+            </div>
+        <% order.order_items.each do |item| %>
+            <div class="mx-n5">
+                <div class="row">
+                    <div class="col-md-6 col-lg-6">
+                        <p><%= item.product.name %></p>
+                    </div>
+                    <div class="col-md-3 col-lg-2">
+                        <p><%= item.quantity %></p>
+                    </div>
+                    <div class="col-md-3 col-lg-2">
+                    <p>₹<%= '%.2f' % item.product.price %></p>
+                    </div>
+                </div>
+            </div>
+            
+        <% end %>
+        <div class="row my-4">
+            <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9 text-end">
+                <p class="lead fw-bold mb-0" style="color: #f37a27;">₹<%=order.total_amount %> </p>
+            </div>
+        </div>
+        <p class="lead fw-bold mb-1" style="color: #281a10ff;">Delivery Address</p>
+        <p> <%= order.delivery_address.titleize if order.delivery_address %> </p>
+
+        <p class="lead fw-bold mb-4 pb-2" style="color: #f37a27;">Tracking Order</p>
+        <div class="row">
+        <div class="col-lg-12">
+
+            <div class="horizontal-timeline">
+
+            <ul class="list-inline items d-flex justify-content-between">
+                <li class="list-inline-item items-list">
+                <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Recieved</p
+                    class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">
+                </li>
+                <li class="list-inline-item items-list">
+                <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Shipped</p
+                    class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">
+                </li>
+                <li class="list-inline-item items-list">
+                <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Out for Delivery
+                </p>
+                </li>
+                <li class="list-inline-item items-list">
+                <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Delivered
+                </p>
+                </li>
+                <%# <li class="list-inline-item items-list text-end" style="margin-right: 8px;">
+                <%# <p style="margin-right: -8px;">Delivered</p> %>
+                </li>
+            </ul>
+
+            </div>
+
+        </div>
+        </div>
+
+        <p class="mt-4 pt-2 mb-0">Want any help? <a href="#!" style="color: #f37a27;">Please contact us</a>
+        </p>
+    </div>
+<% end %>
+<div class="pagination justify-content-center"> 
+    <%= will_paginate @orders, 
+  renderer: WillPaginate::ActionView::BootstrapLinkRenderer, 
+  list_classes: %w(pagination justify-content-center) %>
+</div>
+
+
+<!--
+<section class="h-100 h-custom" style="background-color: #eee;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-8 col-xl-6">
+
+        <h2 class="mb-4 text-center" style="color: #f37a27;">All Orders</h2>
+
+        <% @orders.each do |order| %>
+          <div class="card mb-4 border-top border-bottom border-3" style="border-color: #f37a27 !important;">
+            <div class="card-body p-4">
+
+              <p class="lead fw-bold mb-4" style="color: #f37a27;">Purchase Receipt</p>
+
+              <div class="row mb-3">
+                <div class="col-6">
+                  <p class="small text-muted mb-1">Date</p>
+                  <p><%= order.created_at.strftime('%d %B %Y, %I:%M %p') %></p>
+                </div>
+                <div class="col-6">
+                  <p class="small text-muted mb-1">Order No.</p>
+                  <p><%= order.id %></p>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-12">
+                  <p class="small text-muted mb-1">Status</p>
+                  <p><%= order.status.titleize %></p>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-12">
+                  <p class="small text-muted mb-1">Payment Option</p>
+                  <p><%= order.payment_option.upcase %></p>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-12">
+                  <p class="small text-muted mb-1">Delivery Address</p>
+                  <p><%= order.delivery_address.presence || 'N/A' %></p>
+                </div>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-12">
+                  <p class="small text-muted mb-1">Customer</p>
+                  <p><%= order.customer.name %></p>
+                </div>
+              </div>
+
+              <% if order.order_items.any? %>
+                <div class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
+                  <% order.order_items.each do |item| %>
+                    <div class="row mb-2">
+                      <div class="col-md-8 col-lg-9">
+                        <p class="mb-1"><strong>Product:</strong> <%= item.product&.name || 'Product Not Found' %></p>
+                        <p class="mb-0"><strong>Seller:</strong> <%= item.product&.seller&.name %></p>
+                      </div>
+                      <div class="col-md-4 col-lg-3 text-end">
+                        <p class="mb-1">Unit Price: ₹<%= '%.2f' % item.unit_price %></p>
+                        <p class="mb-1">Quantity: <%= item.quantity %></p>
+                        <p class="mb-0">Total: ₹<%= '%.2f' % item.total_price %></p>
+                      </div>
+                    </div>
+                    <hr>
+                  <% end %>
+                </div>
+              <% else %>
+                <p class="text-center fst-italic my-3">No items found in this order.</p>
+              <% end %>
+
+              <div class="row my-4">
+                <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9 text-end">
+                  <%# <p class="lead fw-bold mb-0" style="color: #f37a27;">₹<%= '%.2f' % order.total_amount %></p> %>
+                </div>
+              </div>
+
+              
+              <p class="lead fw-bold mb-4 pb-2" style="color: #f37a27;">Tracking Order</p>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="horizontal-timeline">
+                    <ul class="list-inline items d-flex justify-content-between">
+                      <li class="list-inline-item items-list">
+                        <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Ordered</p>
+                      </li>
+                      <li class="list-inline-item items-list">
+                        <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Shipped</p>
+                      </li>
+                      <li class="list-inline-item items-list">
+                        <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">On the way</p>
+                      </li>
+                      <li class="list-inline-item items-list text-end" style="margin-right: 8px;">
+                        <p style="margin-right: -8px;">Delivered</p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            
+
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!--
+<section class="h-100 h-custom" style="background-color: #eee;">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-lg-8 col-xl-6">
+                <div class="card border-top border-bottom border-3" style="border-color: #f37a27 !important;">
+                <div class="card-body p-5">
+
+                    <p class="lead fw-bold mb-5" style="color: #f37a27;">Purchase Reciept</p>
+
+                    <div class="row">
+                    <div class="col mb-3">
+                        <p class="small text-muted mb-1">Date</p>
+                        <p>10 April 2021</p>
+                    </div>
+                    <div class="col mb-3">
+                        <p class="small text-muted mb-1">Order No.</p>
+                        <p>012j1gvs356c</p>
+                    </div>
+                    </div>
+
+                    <div class="mx-n5 px-5 py-4" style="background-color: #f2f2f2;">
+                    <div class="row">
+                        <div class="col-md-8 col-lg-9">
+                        <p>BEATS Solo 3 Wireless Headphones</p>
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                        <p>₹299.99</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-lg-9">
+                        <p class="mb-0">Shipping</p>
+                        </div>
+                        <div class="col-md-4 col-lg-3">
+                        <p class="mb-0">₹33.00</p>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="row my-4">
+                    <div class="col-md-4 offset-md-8 col-lg-3 offset-lg-9">
+                        <p class="lead fw-bold mb-0" style="color: #f37a27;">₹262.99</p>
+                    </div>
+                    </div>
+
+                    <p class="lead fw-bold mb-4 pb-2" style="color: #f37a27;">Tracking Order</p>
+
+                    <div class="row">
+                    <div class="col-lg-12">
+
+                        <div class="horizontal-timeline">
+
+                        <ul class="list-inline items d-flex justify-content-between">
+                            <li class="list-inline-item items-list">
+                            <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Ordered</p
+                                class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">
+                            </li>
+                            <li class="list-inline-item items-list">
+                            <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">Shipped</p
+                                class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">
+                            </li>
+                            <li class="list-inline-item items-list">
+                            <p class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">On the way
+                            </p>
+                            </li>
+                            <li class="list-inline-item items-list text-end" style="margin-right: 8px;">
+                            <p style="margin-right: -8px;">Delivered</p>
+                            </li>
+                        </ul>
+
+                        </div>
+
+                    </div>
+                    </div>
+
+                    <p class="mt-4 pt-2 mb-0">Want any help? <a href="#!" style="color: #f37a27;">Please contact
+                        us</a></p>
+
+                </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </section>
+-->

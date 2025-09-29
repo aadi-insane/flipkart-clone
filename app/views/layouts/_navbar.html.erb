@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <img width="50" height="50" src="https://img.icons8.com/bubbles/100/flipkart.png" alt="flipkart"/>
+    <%= link_to "Flipkart", root_path, class: "navbar-brand" %>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "My Account", edit_user_registration_path, class: "nav-link text-warning" %>
+          </li>
+          
+          <% if current_user.seller? %>
+            
+            <li class="nav-item">
+              <%= link_to "Add New Product", new_product_path, class: "nav-link text-warning" %>
+            </li>
+          <% elsif current_user.customer? %>
+            <li class="nav-item">
+              <%= link_to "My Orders", orders_path, class: "nav-link text-warning" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "My Cart", cart_path, class: "nav-link text-warning" %>
+            </li>
+          <% elsif current_user.admin? %>
+            <li class="nav-item">
+              <%= link_to "Admin Dashboard", "#", class: "nav-link text-warning" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Manage Users", "#", class: "nav-link text-warning" %>
+            </li>
+          <% end %>
+
+          <li class="nav-item">
+            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link btn btn-link btn-outline-danger text-light mx-2" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Login/Signup", new_user_session_path, class: "nav-link btn btn-outline-secondary text-light mx-2" %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</nav>

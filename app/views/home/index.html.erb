@@ -1,0 +1,20 @@
+<div class="container mt-4">
+  <div class="text-center">
+    <% if user_signed_in? %>
+      <h1 class="text-start">Welcome, <%= current_user.name || current_user.email %>!</h1>
+    <% else %>
+      <h1>Welcome to Flipkart!</h1>
+      <p class="lead">Please log in or sign up to get started.</p>
+    <% end %>
+  </div>
+
+  <div class="mt-5">
+    <%= render 'products/products_list', products: @products %>
+  </div>
+
+  <div class="pagination justify-content-center"> 
+    <%= will_paginate @products, 
+  renderer: WillPaginate::ActionView::BootstrapLinkRenderer, 
+  list_classes: %w(pagination justify-content-center) %>
+  </div>
+</div>

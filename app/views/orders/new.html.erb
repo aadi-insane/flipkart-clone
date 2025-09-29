@@ -1,0 +1,79 @@
+<div class="container my-4">
+  <h2 class="mb-4">Order For: <%= current_user.name || current_user.email %></h2>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body p-0">
+      <table class="table table-hover mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @cart.cart_items.each do |cart_item| %>
+            <tr>
+              <td>
+                <%= link_to cart_item.product.name, product_path(cart_item.product), class: "text-decoration-none fw-bold" %>
+              </td>
+              <td>₹ <%= cart_item.product.price %></td>
+              <td><%= cart_item.quantity %></td>
+              <td>₹ <%= cart_item.product.price * cart_item.quantity %></td>
+            </tr>
+          <% end %>
+        </tbody>
+        <tfoot class="table-light">
+          <tr>
+            <th colspan="3" class="text-end">Bill Amount:</th>
+            <th>₹ <%= @cart.cart_items.sum { |item| item.product.price * item.quantity } %></th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+
+  <%= form_with model: @order, class: "needs-validation" do |form| %>
+    <div class="row g-4">
+      
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Delivery Address</h5>
+            <%= form.hidden_field :total_amount, value: @cart.cart_items.sum { |item| item.product.price * item.quantity } %>
+            <% if current_user.address.blank? %>
+            <div>
+                <p class="text-danger">Please add an "Address" before placing the order.</p>
+                <%= link_to "Add Address", edit_user_registration_path, class: "btn btn-outline-primary btn-sm" %>
+            </div>
+            <% else %>
+                <%= form.label :delivery_address, class: "form-label fw-semibold" %>
+                <%= form.text_field :delivery_address, class: "form-control", value: current_user.address, readonly: true %>
+                <div class="mt-2">
+                <%= link_to "Edit Address", edit_user_registration_path, class: "btn btn-outline-primary btn-sm" %>
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Payment Option</h5>
+            <%= form.label :payment_option, class: "form-label fw-semibold" %>
+            <%= form.select :payment_option, [:cod, :emi, :upi, :card], class: "form-select" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <% if current_user.address.blank? %>
+        <p class="text-danger text-end">Please add an "Address" first to see "Place Order Button"</p>
+    <% else %>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+      <%= form.submit "Place Order", class: "btn btn-success btn-lg" %>
+    </div>
+    <% end %>
+  <% end %>
+</div>
