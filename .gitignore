@@ -58,7 +58,7 @@ node_modules/
 /public/packs-test
 /public/assets
 
-# Ignore yarn files
+# Ignore yarn files    
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
@@ -73,3 +73,5 @@ yarn-debug.log*
 /config/database.yml
 /config/credentials.yml.enc
 CREATE_METHOD.md
+
+/vendor
