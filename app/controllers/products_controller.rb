@@ -56,6 +56,26 @@ class ProductsController < ApplicationController
   def delete
   end
 
+  def search_product
+    @query = params[:query]
+    
+    if @query.present?
+      @results = Product.where("name ILIKE ?", "%#{@query}%")
+    else
+      flash[:alert] = "Please enter your query."
+      redirect_to root_path
+    end
+
+    if @results
+      @results = @results.paginate(page: params[:page], per_page: 10)
+    end
+    # result.each do |r|
+    #   puts r.name
+    #   puts r.price
+    #   puts r.description
+    # end
+  end
+
   private
     def product_params
       params.require(:product).permit(:name, :description, :price, :stock, :seller_id)

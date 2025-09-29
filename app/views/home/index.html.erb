@@ -1,13 +1,24 @@
 <div class="container mt-4">
-  <div class="text-center">
+  <div class="d-flex flex-row align-items-center justify-content-between bg-info p-3">
     <% if user_signed_in? %>
-      <h1 class="text-start">Welcome, <%= current_user.name || current_user.email %>!</h1>
+      <div>
+        <p class="mb-0 text-start text-primary">
+          Welcome, <strong><%= current_user.name || current_user.email %>!</strong>
+        </p>
+      </div>
     <% else %>
-      <h1>Welcome to Flipkart!</h1>
-      <p class="lead">Please log in or sign up to get started.</p>
+      <div>
+        <h1 class="h5 text-white mb-0">Welcome to Flipkart!</h1>
+      </div>
     <% end %>
-  </div>
 
+    <div class="flex-grow-1 mx-3">
+      <%= form_with url: "/search", method: :get, class: "d-flex" do |form| %>
+        <%= form.text_field :query, class: "form-control me-2 fst-italic fw-lighter", placeholder: "Search Product..." %>
+        <%= form.submit "Search", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
   <div class="mt-5">
     <%= render 'products/products_list', products: @products %>
   </div>

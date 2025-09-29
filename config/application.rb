@@ -2,6 +2,7 @@ require_relative "boot"
 
 require "rails/all"
 
+require "active_storage/engine" 
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -12,7 +13,7 @@ module Flipkart
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
-    # ✅ Set default time zone to IST
+    # Set default time zone to IST
     config.time_zone = 'Asia/Kolkata'
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do

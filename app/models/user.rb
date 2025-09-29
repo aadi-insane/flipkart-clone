@@ -10,6 +10,9 @@ class User < ApplicationRecord
   has_many :products_as_seller, class_name: "Product", foreign_key: "seller_id"
   has_many :orders_as_customer, class_name: "Order", foreign_key: "customer_id"
   has_one :cart, dependent: :destroy
+  has_one_attached :avatar do |attachable|
+    attachable.variant :thumb, resize_to_limit: [100, 100]
+  end
   # has_many :orders, dependent: :destroy
 
   after_create :create_user_cart

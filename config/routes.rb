@@ -35,5 +35,6 @@ Rails.application.routes.draw do
 
   post 'cart/empty', to: 'carts#empty_cart', as: :empty_cart
   # patch 'order/cancel', to: 'orders#cancel_order', as: :cancel_order
+  get '/search', to: 'products#search_product', as: :search_product
 
 end

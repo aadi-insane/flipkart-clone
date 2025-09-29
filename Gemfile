@@ -77,3 +77,8 @@ gem "activeadmin"
 gem 'sassc-rails'
 gem 'chartkick'
 gem 'groupdate'
+# Use active storage
+gem 'activestorage'
+
+# Use Active Storage variants
+gem "image_processing", "~> 1.2"

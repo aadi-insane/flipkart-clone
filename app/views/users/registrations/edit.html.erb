@@ -2,11 +2,19 @@
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <div class="card shadow-sm">
+        <div style="border-radius: 50%;" class="m-auto">
+          <%= image_tag resource.avatar.variant(:thumb), class: "rounded-circle", style: "width: 100px;" if resource.avatar.attached? %>
+        </div>
         <div class="card-body p-4">
           <h2 class="card-title text-center mb-4">Edit <%= resource_name.to_s.humanize %></h2>
 
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
             <%= render "users/shared/error_messages", resource: resource %>
+
+            <div class="mb-3">
+              <%= f.label "Choose a Profile Picture : ", class: "form-label" %>
+              <%= f.file_field :avatar, class: "form-control" %>
+            </div>
 
             <div class="mb-3">
               <%= f.label :name, class: "form-label" %>
