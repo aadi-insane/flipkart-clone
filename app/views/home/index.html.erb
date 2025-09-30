@@ -3,25 +3,38 @@
     <% if user_signed_in? %>
       <div>
         <p class="mb-0 text-start text-primary">
-          Welcome, <strong><%= current_user.name || current_user.email %>!</strong>
+          Welcome, <strong><%= current_user.name.split.first || current_user.email %>!</strong>
         </p>
       </div>
     <% else %>
       <div>
-        <h1 class="h5 text-white mb-0">Welcome to Flipkart!</h1>
+        <p class="text-white mb-0">Welcome to <span class="text-primary">Flipkart !</span></p>
       </div>
     <% end %>
 
     <div class="flex-grow-1 mx-3">
-      <%= form_with url: "/search", method: :get, class: "d-flex" do |form| %>
-        <%= form.text_field :query, class: "form-control me-2 fst-italic fw-lighter", placeholder: "Search Product..." %>
+      <%= form_with url: "/search", method: :get, class: "d-flex", id: "search-form" do |form| %>
+        <%= form.text_field :query, class: "form-control me-2 fst-italic fw-lighter", placeholder: "Search Product...", id: "search-query" %>
         <%= form.submit "Search", class: "btn btn-primary" %>
       <% end %>
     </div>
+
   </div>
   <div class="mt-5">
     <%= render 'products/products_list', products: @products %>
   </div>
+
+  <div>
+  <!-- Back to top button -->
+    <button
+            type="button"
+            class="btn btn-danger btn-floating btn-lg rounded-circle"
+            id="btn-back-to-top"
+            >
+      <%= image_tag "https://img.icons8.com/?size=45&id=118550&format=png&color=000000" %>
+    </button>
+  </div>
+
 
   <div class="pagination justify-content-center"> 
     <%= will_paginate @products, 

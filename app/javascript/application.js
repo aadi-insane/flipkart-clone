@@ -2,6 +2,7 @@
 import "chartkick/chart.js"
 import "@hotwired/turbo-rails"
 import "controllers"
+import "@fortawesome/fontawesome-free/css/all";
 
 // import jstz from 'jstz';
 // import moment from 'moment-timezone';

@@ -73,5 +73,6 @@ yarn-debug.log*
 /config/database.yml
 /config/credentials.yml.enc
 CREATE_METHOD.md
+products-1000.csv
 
 /vendor

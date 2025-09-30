@@ -15,4 +15,16 @@ ActiveAdmin.register Order do
   #   permitted
   # end
   
+  index do
+    selectable_column
+    id_column
+    column :customer
+    column :status
+    column :delivery_address
+    column :payment_option
+    column :total_amount
+    column :created_at
+    actions
+  end
+
 end

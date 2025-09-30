@@ -68,6 +68,7 @@ class ProductsController < ApplicationController
 
     if @results
       @results = @results.paginate(page: params[:page], per_page: 10)
+      flash.now[:notice] = "'#{@results.count}' results found."
     end
     # result.each do |r|
     #   puts r.name

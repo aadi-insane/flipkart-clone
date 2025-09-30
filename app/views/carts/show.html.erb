@@ -1,13 +1,13 @@
 <div class="container my-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="mb-0"><%= @current_user.name || @current_user.email %>'s Cart</h1>
+    <h1 class="mb-4 m-3"><%= @current_user.name.split.first || @current_user.email %>'s Cart</h1>
     <% if @cart.cart_items.any? %>
       <%= button_to "Empty Cart", empty_cart_path, method: :post, class: "btn btn-outline-danger" %>
     <% end %>
   </div>
 
   <% if @cart.cart_items.empty? %>
-    <div class="card p-5 text-center">
+    <div class="card p-5 text-center m-5">
       <h3 class="text-muted">Your cart is empty.</h3>
       <p class="text-muted">Explore our products and add some items to your cart!</p>
       <%= link_to "Go to Products", root_path, class: "btn btn-primary mt-3" %>

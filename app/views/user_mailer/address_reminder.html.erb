@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>Flipkart Clone Email</title>
     <style>
       body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -61,14 +63,14 @@
     </style>
   </head>
   <body>
-    <h1>Welcome to Flipkart Clone, <%= @object.name %></h1>
-    <p>
-      You have successfully signed up to flipkart_colne.com,
-      your username is: <%= @object.email %>.<br>
-    </p>
- 
-    <h4>Thanks for joining and have a great day!</h4>
-    <h5>Team Flipkart Clone Admin</h5>
-
+    <div class="container" role="main">
+      <h1>Hello <%= @user.name %>,</h1>
+      <p>We noticed you haven't added your address yet. Please update it to get the most out of our service!</p>
+      <a href="http://127.0.0.1:3000/users/edit" class="btn-primary" target="_blank" rel="noopener noreferrer">
+        Update Your Address
+      </a>
+      <h4>Thanks for using Flipkart Clone and have a great day!</h4>
+      <h5>Team Flipkart Clone Admin</h5>
+    </div>
   </body>
 </html>

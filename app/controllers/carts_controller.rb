@@ -3,12 +3,11 @@ class CartsController < ApplicationController
 
   def show
     @cart = current_user.cart
-    # puts "There are params - #{params}"
   end
 
   def empty_cart
     @cart = current_user.cart
-    @cart.cart_items.destroy_all
+    @cart.empty!
     flash[:notice] = "Your cart has been emptied."
     redirect_to cart_path
   end

@@ -14,7 +14,9 @@
  *= require_self
  */
 
- /* In your CSS file (e.g., app/assets/stylesheets/application.css) */
+/* In your CSS file (e.g., app/assets/stylesheets/application.css) */
+
+// @import "font-awesome";
 
 .social-icon-link .nav-item {
   text-decoration: none !important;

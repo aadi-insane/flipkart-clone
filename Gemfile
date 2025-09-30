@@ -82,3 +82,5 @@ gem 'activestorage'
 
 # Use Active Storage variants
 gem "image_processing", "~> 1.2"
+gem 'sidekiq', '~> 6.5'
+# gem "font-awesome-sass"

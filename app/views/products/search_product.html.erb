@@ -1,13 +1,15 @@
 <div class="card shadow-sm">
   <div class="card-body">
-    <h5 class="card-title">All Products</h5>
+    <%# <h5 class="card-title">All Products</h5> %>
     <% if @results.empty? %>
       <div class="alert alert-info" role="alert">
         No products found with "<%= @query %>".
       </div>
     <% else %>
+      <!-- <p class="text-center"><%= @results.count %> results found. </p> -->
       <div class="d-flex flex-wrap justify-content-center">
     <% @results.each do |product| %>
+    
       <div class="card m-3" style="max-width: 320px">
         
           <%= link_to image_tag("product.jpg", alt: "product_image", class: "card-img-top"), product_path(product) %>
@@ -37,6 +39,18 @@
     <% end %>
   </div>
 </div>
+
+<div>
+<!-- Back to top button -->
+  <button
+          type="button"
+          class="btn btn-danger btn-floating btn-lg rounded-circle"
+          id="btn-back-to-top"
+          >
+    <%= image_tag "https://img.icons8.com/?size=45&id=118550&format=png&color=000000" %>
+  </button>
+</div>
+
 <div class="pagination justify-content-center"> 
     <%= will_paginate @results, 
   renderer: WillPaginate::ActionView::BootstrapLinkRenderer, 

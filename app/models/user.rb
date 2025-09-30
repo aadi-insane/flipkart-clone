@@ -24,7 +24,7 @@ class User < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     # byebug
-    ["cart", "products_as_seller","orders_as_customer"]
+    ["cart", "products_as_seller","orders_as_customer", "avatar_attachment", "avatar_blob"]
   end
 
 

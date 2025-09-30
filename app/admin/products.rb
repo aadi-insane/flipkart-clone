@@ -24,5 +24,29 @@ ActiveAdmin.register Product do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+
+  index do
+    selectable_column 
+    id_column
+    column :name
+    column :price
+    column :stock
+    column :seller
+    column :created_at, label: "Added On"
+    column :updated_at
+    actions
+  end
+
+  form do |f|
+    f.inputs 'Product Details' do
+      f.input :name
+      f.input :description
+      # Specify the max value for the price input explicitly
+      f.input :price, input_html: { max: 999_999.99 }
+      f.input :stock
+      f.input :seller
+    end
+    f.actions
+  end
   
 end

@@ -10,7 +10,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <% if user_signed_in? %>
-          <% if current_user.avatar.attached? %>
+          <!-- <% if current_user.avatar.attached? %>
             <li class="nav-item">
               <%= link_to image_tag(current_user.avatar.variant(:thumb), class: "rounded-circle m-0", style: "width: 30px;"), edit_user_registration_path, class: "nav-link text-warning" %>
             </li>
@@ -18,7 +18,10 @@
             <li class="nav-item">
               <%= link_to image_tag("https://img.icons8.com/?size=45&id=108652&format=png&color=000000", alt: "user-profile", class: "rounded-circle m-0"), edit_user_registration_path %>
             </li>
-          <% end %>
+          <% end %> -->
+          <li class="nav-item">
+            <%= link_to image_tag("https://img.icons8.com/?size=45&id=108652&format=png&color=000000"), edit_user_registration_path %>
+          </li>
           <li class="nav-item">
             <%= link_to "My Account |", edit_user_registration_path, class: "nav-link text-warning" %>
           </li>
@@ -30,7 +33,7 @@
             </li>
           <% elsif current_user.customer? %>
             <li class="nav-item">
-              <%= link_to image_tag("https://img.icons8.com/?size=45&id=116993&format=png&color=000000"), orders_path%>
+              <%= link_to image_tag("https://img.icons8.com/?size=45&id=116718&format=png&color=000000"), orders_path%>
             </li>
             <li class="nav-item">
               <%= link_to "My Orders |", orders_path, class: "nav-link text-warning" %>

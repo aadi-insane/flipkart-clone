@@ -1,5 +1,6 @@
 class Cart < ApplicationRecord
-  belongs_to :user
+  # belongs_to :user
+  belongs_to :customer, class_name: 'User', foreign_key: 'user_id'
   has_many :cart_items, -> { order(created_at: :desc) }, dependent: :destroy
 
   def self.ransackable_attributes(auth_object = nil)
@@ -9,6 +10,10 @@ class Cart < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     # byebug
     ["cart_items", "user"]
+  end
+
+  def empty!
+    cart_items.destroy_all
   end
 
 end
