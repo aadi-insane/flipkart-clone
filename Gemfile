@@ -51,6 +51,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
   gem "byebug", "~> 11.1"
   gem "letter_opener"
+  gem "rspec-rails"
 end
 
 group :development do
@@ -84,3 +85,5 @@ gem 'activestorage'
 gem "image_processing", "~> 1.2"
 gem 'sidekiq', '~> 6.5'
 # gem "font-awesome-sass"
+
+gem 'devise-jwt' # for postman API testing

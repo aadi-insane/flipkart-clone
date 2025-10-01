@@ -1,18 +1,18 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 offset-md-2">
-      <div class="card shadow-sm">
-        <div style="border-radius: 50%;" class="m-auto">
+      <!-- Profile Information Card -->
+      <div class="card shadow-sm mb-4">
+        <div class="m-auto" style="border-radius: 50%;">
           <%= image_tag resource.avatar.variant(:thumb), class: "rounded-circle", style: "width: 100px;" if resource.avatar.attached? %>
         </div>
         <div class="card-body p-4">
-          <h2 class="card-title text-center mb-4">Edit <%= resource_name.to_s.humanize %></h2>
-
+          <h2 class="card-title text-center mb-4">Edit Profile</h2>
           <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
             <%= render "users/shared/error_messages", resource: resource %>
 
             <div class="mb-3">
-              <%= f.label "Choose a Profile Picture : ", class: "form-label" %>
+              <%= f.label "Choose a Profile Picture:", class: "form-label" %>
               <%= f.file_field :avatar, class: "form-control" %>
             </div>
 
@@ -37,6 +37,28 @@
               </div>
             <% end %>
 
+            <div class="d-grid gap-2">
+              <%= f.submit "Update Profile", class: "btn btn-primary" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Password Change Card -->
+      <div class="card shadow-sm mt-4">
+        <div class="card-body p-4">
+          <h2 class="card-title text-center mb-4">Change Password</h2>
+          <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+            <%= render "users/shared/error_messages", resource: resource %>
+            
+            <div class="mb-3">
+              <%= f.label :current_password, class: "form-label" %>
+              <%= f.password_field :current_password, class: "form-control", autocomplete: "current-password" %>
+              <div class="form-text">
+                We need your current password to confirm your changes.
+              </div>
+            </div>
+
             <div class="mb-3">
               <%= f.label :password, class: "form-label" %>
               <%= f.password_field :password, class: "form-control", autocomplete: "new-password" %>
@@ -54,16 +76,9 @@
               <%= f.password_field :password_confirmation, class: "form-control", autocomplete: "new-password" %>
             </div>
 
-            <div class="mb-3">
-              <%= f.label :current_password, class: "form-label" %>
-              <%= f.password_field :current_password, class: "form-control", autocomplete: "current-password" %>
-              <div class="form-text">
-                We need your current password to confirm your changes.
-              </div>
-            </div>
 
             <div class="d-grid gap-2">
-              <%= f.submit "Update", class: "btn btn-primary" %>
+              <%= f.submit "Change Password", class: "btn btn-warning" %>
             </div>
           <% end %>
         </div>
@@ -71,15 +86,11 @@
 
       <div class="mt-4 text-center">
         <h3 class="h5">Cancel my account</h3>
-        <%= button_to "Cancel my account", registration_path(resource_name), 
-          method: :delete, 
-          data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, 
+        <%= button_to "Cancel my account", registration_path(resource_name),
+          method: :delete,
+          data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" },
           class: "btn btn-danger" %>
       </div>
-
-      <!-- <div class="text-center m-3">
-        <%= link_to "Back", :back, class: "btn btn-link" %>
-      </div> -->
     </div>
   </div>
 </div>
