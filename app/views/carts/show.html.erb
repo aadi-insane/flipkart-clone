@@ -64,7 +64,10 @@
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-      <%= link_to "Proceed to Checkout", new_order_path, class: "btn btn-success btn-lg" %>
+      <%= link_to "Proceed to Checkout", new_order_path(@order, cart_based_order: true), class: "btn btn-success btn-lg" %>
+
+      
+      <!-- <%= button_to "Proceed to Checkout", new_order_path, params: { cart_based_order: true}, class: "btn btn-success btn-lg" %> -->
     </div>
   <% end %>
 </div>

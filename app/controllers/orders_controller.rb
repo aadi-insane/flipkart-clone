@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
       
       if cart_items.empty?
         flash[:alert] = "Your cart is empty. Please add some products before checking out."
-        redirect_to root_path and return
+        redirect_to root_path
       end
       
       cart_items.each do |item|
@@ -100,8 +100,7 @@ class OrdersController < ApplicationController
     end
 
     if @order.save
-      # Empty the cart ONLY if the order was cart-based
-      if params[:cart_based_order].present?
+      if params[:cart_based_order].to_s == "true"
         current_user.cart.empty!
       end
       redirect_to orders_path, notice: "Hurray! Your order has been placed successfully!"
@@ -127,6 +126,6 @@ class OrdersController < ApplicationController
 
   private
     def order_params
-      params.require(:order).permit(:payment_option, :delivery_address, order_items_attributes: [:product_id, :quantity, :unit_price, :total_price])
+      params.require(:order).permit(:payment_option, :delivery_address, :cart_based_order, order_items_attributes: [:product_id, :quantity, :unit_price, :total_price])
     end
 end
