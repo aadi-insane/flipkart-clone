@@ -66,25 +66,55 @@ class ProductsController < ApplicationController
   def delete
   end
 
-  def search_product
-    @query = params[:query]
+  # def search_product
+  #   @query = params[:query]
     
-    if @query.present?
-      @results = Product.where("name ILIKE ?", "%#{@query}%")
-    else
-      flash[:alert] = "Please enter your query."
-      redirect_to root_path
+  #   if @query.present?
+  #     @results = Product.where("name ILIKE ?", "%#{@query}%")
+  #   else
+  #     flash[:alert] = "Please enter your query."
+  #     redirect_to root_path
+  #   end
+
+  #   if @results
+  #     @results = @results.paginate(page: params[:page], per_page: 10)
+  #     flash.now[:notice] = "'#{@results.count}' results found."
+  #   end
+  #   # result.each do |r|
+  #   #   puts r.name
+  #   #   puts r.price
+  #   #   puts r.description
+  #   # end
+  # end
+    
+  def search_product
+    @query = params[:query].to_s.strip
+    @category = params[:category].to_s.strip
+
+    if @query.empty? && (@category.empty? || @category == "All Categories")
+      flash[:alert] = "Please enter a search query or select a category."
+      redirect_to root_path and return
+      # @results = Product.none.paginate(page: params[:page], per_page: 10)
+      # render :search_product and return
     end
 
-    if @results
-      @results = @results.paginate(page: params[:page], per_page: 10)
-      flash.now[:notice] = "'#{@results.count}' results found."
+    @results = Product.all
+
+    @results = @results.where("name ILIKE ?", "%#{@query}%") unless @query.empty?
+
+    unless @category.empty? || @category == "All Categories"
+      @results = @results.where(category: @category)
     end
-    # result.each do |r|
-    #   puts r.name
-    #   puts r.price
-    #   puts r.description
-    # end
+
+    if @results.exists?
+      @results = @results.paginate(page: params[:page], per_page: 12)
+      flash.now[:notice] = "'#{@results.count}' results found."
+    else
+      @results = @results.paginate(page: params[:page], per_page: 12)
+      flash.now[:alert] = "No results found."
+    end
+
+    render :search_product
   end
 
   private

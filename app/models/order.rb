@@ -14,6 +14,13 @@ class Order < ApplicationRecord
 
   accepts_nested_attributes_for :order_items
 
+  scope :by_customer, ->(customer_id) { where(customer_id: customer_id) }
+  scope :recent, -> { order(created_at: :desc) }
+  scope :with_status, ->(status) { where(status: Order.statuses[status]) }
+  scope :completed, -> { where(status: Order.statuses[:completed]) }
+  scope :pending_or_paid, -> { where(status: [Order.statuses[:pending], Order.statuses[:paid]]) }
+
+
   def self.ransackable_attributes(auth_object = nil)
     @ransackable_attributes ||= column_names + _ransackers.keys + _ransack_aliases.keys + attribute_aliases.keys
   end

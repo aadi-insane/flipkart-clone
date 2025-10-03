@@ -12,10 +12,23 @@
       </div>
     <% end %>
 
-    <div class="flex-grow-1 mx-3">
+    <!-- <div class="flex-grow-1 mx-3">
       <%= form_with url: "/search", method: :get, class: "d-flex", id: "search-form" do |form| %>
         <%= form.text_field :query, class: "form-control me-2 fst-italic fw-lighter", placeholder: "Search Product...", id: "search-query" %>
         <%= form.submit "Search", class: "btn btn-primary" %>
+      <% end %>
+    </div> -->
+
+    <div class="flex-grow-1 mx-3">
+      <%= form_with url: "/search", method: :get, class: "d-flex", id: "search-form" do %>
+        <%= text_field_tag :query, params[:query], class: "form-control me-2 fst-italic fw-lighter", placeholder: "Search Product..." %>
+        
+        <%= select_tag :category, options_for_select(
+            Product.group(:category).order(:category).pluck(:category).compact.uniq.prepend("All Categories"),
+            params[:category]
+          ), class: "form-select me-2" %>
+
+        <%= submit_tag "Search", class: "btn btn-primary" %>
       <% end %>
     </div>
 
