@@ -9,7 +9,7 @@ class Cart < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     # byebug
-    ["cart_items", "user"]
+    ["cart_items", "customer"]
   end
 
   def empty!

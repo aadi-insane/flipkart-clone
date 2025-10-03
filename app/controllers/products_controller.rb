@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :authorize_seller!, only: [:edit, :update, :destroy]
+
   # def index
   #   # @products = Product.includes(:seller).where(seller_id: 2)
   #   # @products = Product.where(seller_id: 2)
@@ -59,11 +61,15 @@ class ProductsController < ApplicationController
 
   def update
     @product = Product.find(params[:id])
-    @product.update(product_params)
-    redirect_to product_path(@product), notice: "Product has been updated successfully!"
+    if @product.update(product_params)
+      redirect_to product_path(@product), notice: "Product has been updated successfully!"
+    else
+      flash.now[:alert] = "Something went wrong, cannot update product!"
+      render :edit
+    end
   end
 
-  def delete
+  def destroy
   end
 
   # def search_product
@@ -98,7 +104,11 @@ class ProductsController < ApplicationController
       # render :search_product and return
     end
 
-    @results = Product.all
+    if user_signed_in? && current_user.seller?
+      @results = Product.where(seller_id: current_user.id)
+    else
+      @results = Product.all
+    end
 
     @results = @results.where("name ILIKE ?", "%#{@query}%") unless @query.empty?
 
@@ -119,6 +129,13 @@ class ProductsController < ApplicationController
 
   private
     def product_params
-      params.require(:product).permit(:name, :description, :price, :stock, :seller_id)
+      params.require(:product).permit(:name, :description, :price, :stock, :seller_id, :brand, :category, :color, :size, :availability)
+    end
+
+    def authorize_seller!
+      @product = Product.find(params[:id])
+      unless current_user == @product.seller
+        redirect_to root_path, alert: "You are not authorized to modify this product."
+      end
     end
 end
