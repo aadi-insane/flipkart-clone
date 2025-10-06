@@ -229,7 +229,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## 🙋‍♂️ Contact
 
-**Aditya Jain**
+**Aditya Aerpule**
 Intern @ Shriffle Technologies
 📧 [[adityaaerpule@gmail.com](mailto:adityaaerpule@gmail.com)]
 🔗 [GitHub](https://github.com/aadi-insane) | [LinkedIn](https://www.linkedin.com/in/aditya-aerpule-a22062309/)
